@@ -1,0 +1,402 @@
+---
+// 若使用 Astro Nano 模板，可在此导入 Layout
+---
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Modern Export | Premium Solutions</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+    <style is:global>
+        body { font-family: 'Inter', system-ui, sans-serif; }
+        .font-display { font-family: 'Lora', Georgia, serif; }
+    </style>
+    <style>
+        .hero-pattern {
+            background-image:
+                radial-gradient(circle at 20% 80%, rgba(147, 51, 234, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.08) 0%, transparent 45%),
+                linear-gradient(180deg, #faf5ff 0%, #f3e8ff 50%, #faf5ff 100%);
+        }
+        .card-glow {
+            box-shadow: 0 0 0 1px rgba(147, 51, 234, 0.04), 0 2px 4px -2px rgba(0,0,0,0.05), 0 8px 24px -8px rgba(0,0,0,0.08);
+        }
+        .card-glow:hover {
+            box-shadow: 0 0 0 1px rgba(147, 51, 234, 0.12), 0 4px 12px -4px rgba(147, 51, 234, 0.08), 0 24px 48px -16px rgba(0,0,0,0.12);
+        }
+        .btn-primary {
+            background: linear-gradient(180deg, #7c3aed 0%, #5b21b6 100%);
+            box-shadow: 0 2px 8px -2px rgba(124, 58, 237, 0.45);
+        }
+        .btn-primary:hover {
+            background: linear-gradient(180deg, #6d28d9 0%, #4c1d95 100%);
+            box-shadow: 0 4px 16px -4px rgba(124, 58, 237, 0.5);
+            transform: translateY(-1px);
+        }
+        .focus-ring:focus-visible {
+            outline: 2px solid #7c3aed;
+            outline-offset: 2px;
+        }
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(12px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in { animation: fade-in-up 0.6s ease-out forwards; }
+        .animate-in-1 { animation-delay: 0.1s; opacity: 0; }
+        .animate-in-2 { animation-delay: 0.2s; opacity: 0; }
+        .animate-in-3 { animation-delay: 0.3s; opacity: 0; }
+        .animate-in-4 { animation-delay: 0.4s; opacity: 0; }
+    </style>
+</head>
+<button id="openModal" class="fixed bottom-8 right-8 z-[60] w-14 h-14 bg-violet-600 text-white rounded-full shadow-2xl shadow-violet-500/50 flex items-center justify-center hover:scale-110 active:scale-95 transition-all group">
+  <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+  <span class="absolute right-16 bg-white text-violet-600 px-3 py-1 rounded-lg shadow-sm text-xs font-bold opacity-0 group-hover:opacity-100 transition-opacity whitespace-nowrap border border-violet-100">Contact Us</span>
+</button>
+
+<div id="modalOverlay" class="fixed inset-0 z-[70] bg-slate-900/60 backdrop-blur-sm hidden items-center justify-center p-4">
+  <div class="bg-white w-full max-w-lg rounded-[2.5rem] p-8 md:p-12 relative shadow-2xl animate-in fade-in zoom-in duration-300">
+    <button id="closeModal" class="absolute top-6 right-6 text-slate-400 hover:text-slate-900 transition">
+      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+    </button>
+
+    <h3 class="text-3xl font-bold tracking-tight mb-2 text-violet-900">Send an Inquiry</h3>
+    <p class="text-slate-500 mb-8">We'll get back to you within 12 hours.</p>
+
+    <form class="space-y-4">
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Full Name</label>
+        <input type="text" class="w-full bg-slate-50 border-none rounded-2xl p-4 focus:ring-2 ring-violet-500 transition-all" placeholder="John Doe" />
+      </div>
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Work Email</label>
+        <input type="email" class="w-full bg-slate-50 border-none rounded-2xl p-4 focus:ring-2 ring-violet-500 transition-all" placeholder="john@company.com" />
+      </div>
+      <div>
+        <label class="block text-xs font-bold uppercase tracking-widest text-slate-400 mb-2">Message</label>
+        <textarea class="w-full bg-slate-50 border-none rounded-2xl p-4 h-32 focus:ring-2 ring-violet-500 transition-all" placeholder="What can we help you with?"></textarea>
+      </div>
+      <button type="submit" class="w-full bg-violet-600 text-white font-bold py-4 rounded-2xl hover:bg-violet-700 shadow-lg shadow-violet-200 transition-all">
+        Send Message
+      </button>
+    </form>
+  </div>
+</div>
+<div id="searchOverlay" class="fixed inset-0 z-[80] bg-white/95 backdrop-blur-xl hidden flex-col p-6 md:p-20 animate-in fade-in duration-300">
+    <div class="max-w-4xl mx-auto w-full">
+        <div class="flex items-center gap-4 border-b-2 border-violet-100 pb-4">
+            <svg class="w-8 h-8 text-violet-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            <input type="text" id="searchInput" placeholder="Search products (e.g. Unit V-1)..." class="w-full text-2xl md:text-4xl font-bold bg-transparent border-none focus:ring-0 placeholder:text-slate-300" />
+            <button id="closeSearch" class="p-2 text-slate-400 hover:text-black transition">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+            </button>
+        </div>
+
+        <div id="searchResults" class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 overflow-y-auto max-h-[60vh]">
+            <p class="text-slate-400">Start typing to search...</p>
+        </div>
+    </div>
+</div>
+<body class="bg-purple-50/30 text-slate-900 antialiased">
+
+    <nav class="fixed w-full z-50 bg-white/90 backdrop-blur-xl border-b border-purple-100 transition-shadow duration-300" id="nav">
+        <div class="max-w-6xl mx-auto px-5 sm:px-6 h-16 flex items-center justify-between gap-4">
+            <a href="#" class="text-lg font-bold tracking-tight text-purple-900 hover:text-purple-700 transition-colors focus-ring rounded shrink-0">YourBrand</a>
+            <h1 class="sr-only">Premium Apparel Accessories Manufacturer</h1>
+            <div class="flex-1 max-w-xl mx-4 hidden sm:flex">
+                <label for="navSearchInput" class="sr-only">Search</label>
+                <div class="relative w-full">
+                    <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                    <input type="text" id="navSearchInput" placeholder="Search products..." class="w-full pl-10 pr-4 py-2.5 bg-slate-50 border border-purple-100 rounded-full text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-purple-500/30 focus:border-purple-200 transition" />
+                </div>
+            </div>
+            <div class="flex items-center gap-2 shrink-0">
+                <button type="button" id="searchBtn" class="p-2.5 text-slate-600 hover:text-purple-700 hover:bg-purple-50 rounded-full transition focus-ring sm:hidden" aria-label="Search">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                </button>
+                <button type="button" id="navInquiryBtn" class="btn-primary text-white px-5 py-2.5 rounded-full text-sm font-semibold transition-all duration-200 focus-ring cursor-pointer">
+                    Inquiry
+                </button>
+            </div>
+        </div>
+    </nav>
+    <main class="pt-24">
+        <section class="pb-24 bg-white">
+            <div class="max-w-[1440px] mx-auto px-6">
+                <div class="mb-12 border-l-2 border-violet-600 pl-6">
+                    <h2 class="text-xs font-bold tracking-[0.3em] uppercase text-violet-600 mb-2">Our Collections</h2>
+                    <p class="text-3xl font-light text-slate-900 tracking-tight">
+                        Curated <span class="font-bold">Apparel Accents</span>.
+                    </p>
+                </div>
+
+                <div class="flex overflow-x-auto md:grid md:grid-cols-4 gap-4 pb-8 md:pb-0 snap-x snap-mandatory no-scrollbar">
+                    {[
+                        { name: "Buttons", sub: "Fasteners & Toggles", count: "200+ Variants" },
+                        { name: "Zippers", sub: "Metal & Nylon Gears", count: "150+ Styles" },
+                        { name: "Labels", sub: "Woven & Leather Tags", count: "90+ Options" },
+                        { name: "Trimmings", sub: "Lace & Elastic Bands", count: "300+ Designs" }
+                    ].map((cat) => (
+                        <a href={`/category/${cat.name.toLowerCase()}`}
+                            class="group relative min-w-[85%] sm:min-w-[45%] md:min-w-full p-10 rounded-sm bg-slate-50 border border-transparent hover:border-violet-100 hover:bg-white transition-all duration-700 overflow-hidden snap-center">
+                            <span class="absolute -right-4 -bottom-8 text-[120px] font-black text-slate-100/50 group-hover:text-violet-50 transition-colors duration-700 pointer-events-none uppercase italic">
+                                {cat.name.charAt(0)}
+                            </span>
+
+                            <div class="relative z-10">
+                                <h3 class="text-2xl font-bold text-slate-900 group-hover:text-violet-600 transition-colors duration-500">
+                                    {cat.name}
+                                </h3>
+                                <p class="text-sm text-slate-400 mt-1 group-hover:text-slate-600">
+                                    {cat.sub}
+                                </p>
+
+                                <div class="w-8 h-[2px] bg-slate-200 mt-8 group-hover:w-full group-hover:bg-violet-600 transition-all duration-700"></div>
+
+                                <p class="text-[10px] font-bold text-violet-300 group-hover:text-violet-500 mt-4 uppercase tracking-widest">
+                                    {cat.count}
+                                </p>
+                            </div>
+                        </a>
+                    ))}
+                </div>
+
+                <div class="flex md:hidden justify-center mt-4 gap-1">
+                    <div class="w-8 h-1 bg-violet-600 rounded-full"></div>
+                    <div class="w-2 h-1 bg-slate-200 rounded-full"></div>
+                    <div class="w-2 h-1 bg-slate-200 rounded-full"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <style>
+        /* 隐藏滚动条，保持页面整洁 */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+
+    <main class="pt-16">
+        <!-- Featured Products -->
+        <section id="products" class="py-24 bg-[#F5F3FF]">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="flex items-center justify-between mb-12">
+                    <h2 class="text-3xl font-bold tracking-tight text-slate-900">Featured Products</h2>
+                    <span id="product-count" class="text-xs font-bold text-violet-500 bg-violet-100 px-3 py-1 rounded-full">Showing 3</span>
+                </div>
+
+                <div id="product-grid" class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                </div>
+
+                <div id="load-more-trigger" class="mt-16 flex flex-col items-center justify-center gap-4">
+                    <div id="loading-spinner" class="hidden w-8 h-8 border-4 border-violet-200 border-t-violet-600 rounded-full animate-spin"></div>
+                    <p id="no-more-msg" class="hidden text-slate-400 text-sm italic">All products loaded.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 公司简介 & About Us -->
+        <footer id="contact" class="py-20 md:py-24 bg-purple-950 text-white border-t border-purple-800">
+            <div class="max-w-6xl mx-auto px-5 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20">
+                <section id="company-intro">
+                    <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight mb-6 text-white">公司简介</h2>
+                    <p class="text-purple-200/90 leading-relaxed mb-4">
+                        我们致力于为全球客户提供高品质工业组件与解决方案，以精密制造与严格品控著称。产品覆盖自动化、电子、机器人及航空航天等领域，服务超过 200 家国际合作伙伴。
+                    </p>
+                    <p class="text-purple-200/80 text-sm leading-relaxed">
+                        立足本土、服务全球。我们持续投入研发与供应链建设，确保每一件产品都符合国际标准，助力客户实现业务增长。
+                    </p>
+                </section>
+                <section id="about">
+                    <h2 class="font-display text-2xl md:text-3xl font-bold tracking-tight mb-6 text-white">About Us</h2>
+                    <p class="text-purple-200/90 leading-relaxed mb-4">
+                        We deliver premium industrial components and solutions worldwide. Our focus on precision, durability, and global certification has made us a trusted partner for manufacturers across automation, electronics, robotics, and aerospace.
+                    </p>
+                    <p class="text-purple-200/80 text-sm leading-relaxed">
+                        Est. 2026. We combine local expertise with a global supply chain to bring you quality you can rely on. Get in touch via Inquiry for quotes and support.
+                    </p>
+                </section>
+            </div>
+        </footer>
+    </main>
+</body>
+</html>
+<script is:inline>
+  const openBtn = document.getElementById('openModal');
+  const closeBtn = document.getElementById('closeModal');
+  const overlay = document.getElementById('modalOverlay');
+
+  const openContactModal = () => {
+    overlay.classList.remove('hidden');
+    overlay.classList.add('flex');
+    document.body.style.overflow = 'hidden'; // 禁止背景滚动
+  };
+
+  openBtn.addEventListener('click', openContactModal);
+
+  const navInquiryBtn = document.getElementById('navInquiryBtn');
+  if (navInquiryBtn) navInquiryBtn.addEventListener('click', openContactModal);
+
+  const hideModal = () => {
+    overlay.classList.add('hidden');
+    overlay.classList.remove('flex');
+    document.body.style.overflow = 'auto'; // 恢复滚动
+  };
+
+  closeBtn.addEventListener('click', hideModal);
+
+  // 点击遮罩空白处关闭
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) hideModal();
+  });
+
+  // 模拟产品数据（以后你可以从本地 JSON 或 API 获取）
+  const PRODUCTS = [
+    { name: "Industrial Unit V-1", desc: "High-precision automation module", link: "#" },
+    { name: "Industrial Unit V-2", desc: "Energy efficient power unit", link: "#" },
+    { name: "Premium Sensor X-100", desc: "Real-time data tracking", link: "#" },
+    { name: "Global Controller G-5", desc: "Centralized management system", link: "#" }
+  ];
+
+  const searchBtn = document.getElementById('searchBtn');
+  const closeSearch = document.getElementById('closeSearch');
+  const searchOverlay = document.getElementById('searchOverlay');
+  const searchInput = document.getElementById('searchInput');
+  const searchResults = document.getElementById('searchResults');
+  const navSearchInput = document.getElementById('navSearchInput');
+
+  function openSearchOverlay() {
+    searchOverlay.classList.remove('hidden');
+    searchOverlay.classList.add('flex');
+    document.body.style.overflow = 'hidden';
+  }
+
+  // 打开搜索
+  searchBtn.addEventListener('click', () => {
+    openSearchOverlay();
+    searchInput.focus();
+  });
+
+  // 导航栏搜索框：聚焦或输入时打开浮层并同步
+  if (navSearchInput) {
+    navSearchInput.addEventListener('focus', () => {
+      openSearchOverlay();
+      searchInput.value = navSearchInput.value;
+      searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+      searchInput.focus();
+    });
+    navSearchInput.addEventListener('input', (e) => {
+      openSearchOverlay();
+      searchInput.value = e.target.value;
+      searchInput.dispatchEvent(new Event('input', { bubbles: true }));
+    });
+  }
+
+  // 关闭搜索
+  const hideSearch = () => {
+    searchOverlay.classList.add('hidden');
+    searchOverlay.classList.remove('flex');
+    document.body.style.overflow = 'auto';
+    if (navSearchInput) navSearchInput.value = searchInput.value;
+  };
+  closeSearch.addEventListener('click', hideSearch);
+
+  // 搜索过滤逻辑
+  searchInput.addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    if (!term) {
+      searchResults.innerHTML = '<p class="text-slate-400">Start typing to search...</p>';
+      return;
+    }
+
+    const filtered = PRODUCTS.filter(p =>
+      p.name.toLowerCase().includes(term) || p.desc.toLowerCase().includes(term)
+    );
+
+    if (filtered.length > 0) {
+      searchResults.innerHTML = filtered.map(p => `
+        <a href="${p.link}" class="group p-6 bg-slate-50 rounded-3xl hover:bg-violet-600 transition-all duration-300">
+          <h4 class="font-bold text-xl group-hover:text-white transition-colors">${p.name}</h4>
+          <p class="text-slate-500 group-hover:text-violet-100 text-sm mt-1">${p.desc}</p>
+        </a>
+      `).join('');
+    } else {
+      searchResults.innerHTML = '<p class="text-slate-400">No products found.</p>';
+    }
+  });
+
+  // 模拟更多的产品数据库
+  const ALL_PRODUCTS = [
+    { id: 1, name: "Industrial Unit V-1", category: "Automation", price: "$1,200" },
+    { id: 2, name: "Industrial Unit V-2", category: "Automation", price: "$1,500" },
+    { id: 3, name: "Industrial Unit V-3", category: "Electronics", price: "$900" },
+    { id: 4, name: "Premium Sensor X-10", category: "Robotics", price: "$450" },
+    { id: 5, name: "Premium Sensor X-20", category: "Robotics", price: "$550" },
+    { id: 6, name: "Global Hub G-1", category: "Aerospace", price: "$2,900" }
+  ];
+
+  let currentIndex = 0;
+  const BATCH_SIZE = 3; // 每次加载 3 个
+  const grid = document.getElementById('product-grid');
+  const spinner = document.getElementById('loading-spinner');
+  const trigger = document.getElementById('load-more-trigger');
+  const noMoreMsg = document.getElementById('no-more-msg');
+  const countBadge = document.getElementById('product-count');
+
+  // 生成产品 HTML 的函数 (保持 Storeplate 风格)
+  function createProductHTML(item) {
+    return `
+        <div class="group relative flex flex-col bg-white rounded-[2.5rem] p-3 shadow-sm hover:shadow-2xl transition-all duration-500 border border-violet-50 animate-in fade-in slide-in-from-bottom-4">
+            <div class="aspect-[4/5] bg-violet-50/50 rounded-[2rem] overflow-hidden flex items-center justify-center">
+                <svg class="w-16 h-16 text-violet-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-width="0.5" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path></svg>
+            </div>
+            <div class="px-6 py-8 text-center">
+                <p class="text-[10px] font-bold text-violet-400 uppercase tracking-widest mb-2">${item.category}</p>
+                <h3 class="text-xl font-bold mb-3 group-hover:text-violet-600 transition-colors">${item.name}</h3>
+                <span class="font-bold text-slate-900">${item.price}</span>
+            </div>
+        </div>
+    `;
+  }
+
+  // 加载下一批次
+  function loadNextBatch() {
+    if (currentIndex >= ALL_PRODUCTS.length) {
+      spinner.classList.add('hidden');
+      noMoreMsg.classList.remove('hidden');
+      return;
+    }
+
+    spinner.classList.remove('hidden');
+
+    // 模拟网络延迟 (对外贸站更真实)
+    setTimeout(() => {
+      const nextItems = ALL_PRODUCTS.slice(currentIndex, currentIndex + BATCH_SIZE);
+      nextItems.forEach(item => {
+        grid.insertAdjacentHTML('beforeend', createProductHTML(item));
+      });
+      currentIndex += BATCH_SIZE;
+      countBadge.innerText = `Showing ${currentIndex}`;
+      spinner.classList.add('hidden');
+
+      if (currentIndex >= ALL_PRODUCTS.length) {
+        noMoreMsg.classList.remove('hidden');
+      }
+    }, 800);
+  }
+
+  // 核心：观察底部触发器
+  const observer = new IntersectionObserver((entries) => {
+    if (entries[0].isIntersecting && currentIndex < ALL_PRODUCTS.length) {
+      loadNextBatch();
+    }
+  }, { threshold: 0.1 });
+
+  observer.observe(trigger);
+</script>

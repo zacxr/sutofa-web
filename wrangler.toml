@@ -1,5 +1,6 @@
 name = "sutofa-web"
 compatibility_date = "2025-02-25"
+compatibility_flags = [ "nodejs_compat" ]
 
 # 指向包含 _worker.js 的目录
 main = "./dist/_worker.js"

@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Modern Export | Premium Solutions</title>
+    <title>Modern Export | Premium Solution</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <style is:global>
         body { font-family: 'Inter', system-ui, sans-serif; }
@@ -48,6 +48,28 @@
         .animate-in-2 { animation-delay: 0.2s; opacity: 0; }
         .animate-in-3 { animation-delay: 0.3s; opacity: 0; }
         .animate-in-4 { animation-delay: 0.4s; opacity: 0; }
+
+        .collection-card-skeleton {
+            opacity: 1;
+            pointer-events: none;
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+
+        .collection-card-inner {
+            opacity: 0;
+            transform: translateY(4px);
+            transition: opacity 300ms ease-out, transform 300ms ease-out;
+        }
+
+        body.loaded .collection-card-skeleton {
+            opacity: 0;
+            transform: translateY(-4px);
+        }
+
+        body.loaded .collection-card-inner {
+            opacity: 1;
+            transform: translateY(0);
+        }
     </style>
 </head>
 <button id="openModal" class="fixed bottom-8 right-8 z-[60] w-14 h-14 bg-violet-600 text-white rounded-full shadow-2xl shadow-violet-500/50 flex items-center justify-center hover:scale-110 active:scale-95 transition-all group">
@@ -138,13 +160,25 @@
                         { name: "Labels", sub: "Woven & Leather Tags", count: "90+ Options" },
                         { name: "Trimmings", sub: "Lace & Elastic Bands", count: "300+ Designs" }
                     ].map((cat) => (
-                        <a href={`/category/${cat.name.toLowerCase()}`}
-                            class="group relative min-w-[85%] sm:min-w-[45%] md:min-w-full p-10 rounded-sm bg-slate-50 border border-transparent hover:border-violet-100 hover:bg-white transition-all duration-700 overflow-hidden snap-center">
-                            <span class="absolute -right-4 -bottom-8 text-[120px] font-black text-slate-100/50 group-hover:text-violet-50 transition-colors duration-700 pointer-events-none uppercase italic">
+                        <a
+                            href={`/category/${cat.name.toLowerCase()}`}
+                            class="collection-card group relative min-w-[85%] sm:min-w-[45%] md:min-w-full p-10 rounded-sm bg-slate-50 border border-transparent hover:border-violet-100 hover:bg-white transition-all duration-700 overflow-hidden snap-center"
+                        >
+                            <div class="collection-card-skeleton absolute inset-0 flex flex-col justify-center items-start px-10 bg-gradient-to-br from-slate-100 via-slate-50 to-slate-100 animate-pulse">
+                                <div class="h-10 w-10 rounded-full bg-slate-200/80 mb-6"></div>
+                                <div class="space-y-3 w-full max-w-[180px]">
+                                    <div class="h-5 bg-slate-200/80 rounded-full w-3/4"></div>
+                                    <div class="h-3 bg-slate-200/70 rounded-full w-full"></div>
+                                    <div class="h-3 bg-slate-200/60 rounded-full w-2/3"></div>
+                                </div>
+                                <div class="h-[2px] w-1/3 bg-slate-200/80 rounded-full mt-8"></div>
+                            </div>
+
+                            <span class="collection-card-inner absolute -right-4 -bottom-8 text-[120px] font-black text-slate-100/50 group-hover:text-violet-50 transition-colors duration-700 pointer-events-none uppercase italic">
                                 {cat.name.charAt(0)}
                             </span>
 
-                            <div class="relative z-10">
+                            <div class="collection-card-inner relative z-10">
                                 <h3 class="text-2xl font-bold text-slate-900 group-hover:text-violet-600 transition-colors duration-500">
                                     {cat.name}
                                 </h3>
@@ -181,6 +215,7 @@
             scrollbar-width: none;
         }
     </style>
+
 
     <main class="pt-16">
         <!-- Featured Products -->
@@ -228,6 +263,10 @@
 </body>
 </html>
 <script is:inline>
+  window.addEventListener('load', () => {
+    document.body.classList.add('loaded');
+  });
+
   const openBtn = document.getElementById('openModal');
   const closeBtn = document.getElementById('closeModal');
   const overlay = document.getElementById('modalOverlay');
